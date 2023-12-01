@@ -1,12 +1,13 @@
 #include <iostream>
-#include <string.h>
+#include <string.h> //memset 사용하기 위해서 
+#define MAX 52
 using namespace std;
 
 int dy[4] = { 1,-1,0,0 };
 int dx[4] = { 0,0,1,-1 };
 int m, n, k;
-int arr[50][50] = {0, };
-int visited[50][50] = {0, };
+int arr[MAX][MAX] = {0, };
+bool visited[MAX][MAX] = { 0, };
 
 void dfs(int y, int x) 
 {
@@ -17,7 +18,7 @@ void dfs(int y, int x)
         //방문 x이고 배추 있다면 탐색 계속
         if (arr[ny][nx] && !visited[ny][nx])
         {
-            visited[ny][nx]++;
+            visited[ny][nx]=true;
             dfs(ny, nx);
         }
     }
@@ -45,11 +46,10 @@ int main() {
             for (int j = 0; j < m; j++)
                 if (arr[i][j] && !visited[i][j]) {
                     res++;
-                    visited[i][j]++;
+                    visited[i][j]=true;
                     dfs(i, j);
                 }
         cout << res<<"\n";
     }
     return 0;
 }
-
