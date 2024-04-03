@@ -2,63 +2,66 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Node {
-    int data;
-    struct Node* next;
+typedef struct Node
+{
+	int data;
+	struct Node* next;
 }Node;
 
-class LL {
-private : 
-    Node* head = nullptr;
-public:
-    void Push(int value) {
-        Node* newNode = (Node*)malloc(sizeof(Node));
-        newNode->next = head;
-        newNode->data = value;
+class LinkedList 
+{
+	private : 
+		Node* head = nullptr;
+	public :
+		void Push(int value) 
+		{
+			Node* newNode = (Node*)malloc(sizeof(Node));
+			newNode->data = value;
+			newNode->next = head;
 
-        //만약 head노드가 null이라면 
-        if (head == nullptr) {
-            head = newNode;
-            head->next = head;
-        }
-        else {
-            Node* curr = head;
-            while (curr->next != head) curr = curr->next;
-            curr->next = newNode;
-            newNode->next = head;
-        }
-        return;
-    }
+			// if headNode = null
+			if (head == nullptr)
+			{
+				head = newNode;
+				head->next = head;
+			}
+			else
+			{
+				Node* curr = head;
+				while (curr->next != head) curr = curr->next;
+				curr->next = newNode;
+				newNode->next = head;
+			}
+			return;
+		}
+		int Pop(int K)
+		{
+			Node* prev = head;
+			while (K--)
+			{
+				prev = head;
+				head = head->next;
+			}
 
-    int Pop(int K) {
-        Node* prev = head;
-        while (K--) {
-            prev = head;
-            head = head->next;
-        }
+			int value = head->data;
+			prev->next = head->next;
 
-        int value = head->data;
-        prev->next = head->next;
-
-        //free(head);
-        head = prev->next;
-        return value;
-    }
+			head = prev->next;
+			return value;
+		}
 };
 
-int main() {
-    int N, K;
-    LL list;
+int main(void)
+{
+	int n, k;
+	LinkedList list;
 
-    scanf("%d %d", &N, &K);
+	scanf("%d %d", &n, &k);
 
-    for (int i = 1; i <= N; i++) {
-        list.Push(i);
-    }
-    printf("<");
+	for (int i = 1; i <= n; i++) list.Push(i);
+	printf("<");
 
-    for (int i = 1; i < N; i++) {
-        printf("%d, ", list.Pop(K-1));
-    }
-    printf("%d>",list.Pop(N));
+	for (int i = 1; i < n; i++) printf("%d, ", list.Pop(k - 1));
+	printf("%d>", list.Pop(n));
+	return 0;
 }
