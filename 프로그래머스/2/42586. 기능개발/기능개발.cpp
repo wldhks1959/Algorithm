@@ -15,11 +15,12 @@ vector<int> solution(vector<int> progresses, vector<int> speeds)
         else
             q.push((100-progresses[i])/speeds[i]+1);
     }
-    
+
     while(!q.empty())
     {
-        int cnt=1;
-        int cur=q.front();
+        int cnt = 1;
+        int cur = q.front();
+        printf("cur: %d\n", cur);
         q.pop();
         while(!q.empty() && q.front() <= cur)
         {
@@ -28,6 +29,5 @@ vector<int> solution(vector<int> progresses, vector<int> speeds)
         }
         answer.push_back(cnt);
     }
-    
     return answer;
 }
